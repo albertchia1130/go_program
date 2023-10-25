@@ -38,6 +38,7 @@ struct group* HeadGroup;
 void draw();
 bool insertIntoGroup(int,int, enum Direction);
 bool InsertStone(int,int,enum interState);
+bool RemoveGroup(struct group*);
 void CalculateGroupLiberty(enum interState);
 
 struct stone Board_state[X_AXIS][Y_AXIS];
@@ -189,8 +190,13 @@ void CalculateGroupLiberty(enum interState Priority){
 			}
 			
 		}while(true);
+		printf("DebugTrace\n");
 
-		//if(groupToCount->GroupLiberty == 0 && )
+		if(groupToCount->GroupLiberty == 0 && groupToCount->groupState == Priority){
+
+			printf("DebugTrace\n");
+			RemoveGroup(groupToCount);
+		}
 
 
 		if(groupToCount->nextGroup !=NULL){
@@ -202,6 +208,17 @@ void CalculateGroupLiberty(enum interState Priority){
 
 	}while(true);
 
+}
+
+bool RemoveGroup(struct group* groupToRemove){
+	struct stone* StoneToRemove;
+	while(true){
+	    StoneToRemove = groupToRemove->LastStone;
+		groupToRemove->LastStone = groupToRemove->LastStone->nextStone;
+		free(StoneToRemove);
+
+	}
+	return false;
 }
 
 
